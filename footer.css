@@ -1,0 +1,68 @@
+/* General del Footer */
+.footer {
+    background-color: #343a40;
+    color: #fff;
+    padding: 40px 20px;
+    font-size: 14px;
+}
+
+/* Redes Sociales */
+.social-icons {
+    display: flex;
+    gap: 15px; /* Espaciado uniforme entre iconos */
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    transition: transform 0.3s ease-in-out;
+}
+
+.social-icons img:hover {
+    transform: scale(1.2);
+}
+
+/* Enlaces Rápidos */
+.footer a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Botón de contacto */
+.btn-outline-light {
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-light:hover {
+    background-color: #fff;
+    color: #343a40;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .social-icons {
+        justify-content: center; /* Centrar iconos */
+    }
+
+    .footer {
+        text-align: center; /* Alinear texto al centro */
+    }
+
+    .row {
+        flex-direction: column; /* Cambiar diseño a columna */
+        align-items: center; /* Centrar contenido */
+    }
+
+    hr {
+        margin: 20px 0;
+    }
+}
