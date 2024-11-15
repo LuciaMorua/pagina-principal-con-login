@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Aulas - Horarios</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-page">
+            <div class="sidebar">
+                <button onclick="location.href='index.html'">Inicio</button>
+                <button onclick="location.href='salas.html'">Salas</button>
+                <button onclick="location.href='horarios.html'">Horarios</button>
+                <button onclick="location.href='reservas.html'">Reservas</button>
+                <button onclick="location.href='configuracion.html'">Configuración</button>
+            </div>
+            <div class="header">
+                <h1>Gestión de Horarios</h1>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            <div class="content">
+                <h2>CRUD de Materias</h2>
+                <form id="add-course-form">
+                    <input type="text" id="course-name" placeholder="Nombre de la Materia" required>
+                    <select id="course-type">
+                        <option value="anual">Anual</option>
+                        <option value="cuatrimestral">Cuatrimestral</option>
+                    </select>
+                    <select id="day">
+                        <option value="Monday">Lunes</option>
+                        <option value="Tuesday">Martes</option>
+                        <option value="Wednesday">Miércoles</option>
+                        <option value="Thursday">Jueves</option>
+                        <option value="Friday">Viernes</option>
+                    </select>
+                    <input type="number" id="hour" min="9" max="20" placeholder="Hora (9-20)" required>
+                    <button type="submit">Agregar Materia</button>
+                </form>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Tipo</th>
+                            <th>Día</th>
+                            <th>Hora</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="courses-table-body">
+                        <!-- Filas generadas dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">© 2024 Gestor de Aulas</div>
+        </div>
+    </div>
+    <script src="tablahorarios.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Aulas - Calendario</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <script>
+        function generateCalendar() {
+            const calendar = document.getElementById('calendar');
+            const month = parseInt(document.getElementById('month-selector').value);
+            const year = new Date().getFullYear();
+
+            calendar.innerHTML = '';
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayButton = document.createElement('button');
+                dayButton.innerText = day;
+
+                dayButton.onclick = () => {
+                    window.location.href = `tablahorarios.html?dia=${day}&mes=${month + 1}&anio=${year}`;
+                };
+
+                calendar.appendChild(dayButton);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', generateCalendar);
+    </script>
+
+    <div class="container">
+        <div class="main-page">
+            <div class="sidebar">
+                <button onclick="location.href='index.html'">Inicio</button>
+                <button onclick="location.href='salas.html'">Salas</button>
+                <button onclick="location.href='horarios.html'">Horarios</button>
+                <button onclick="location.href='reservas.html'">Reservas</button>
+                <button onclick="location.href='configuracion.html'">Configuración</button>
+            </div>
+            <div class="header">
+                <h1>Gestor de Aulas</h1>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            <div class="content">
+                <h2>Calendario</h2>
+                <div class="calendar-container">
+                    <select id="month-selector" onchange="generateCalendar()">
+                        <option value="0">Enero</option>
+                        <option value="1">Febrero</option>
+                        <option value="2">Marzo</option>
+                        <option value="3">Abril</option>
+                        <option value="4">Mayo</option>
+                        <option value="5">Junio</option>
+                        <option value="6">Julio</option>
+                        <option value="7">Agosto</option>
+                        <option value="8">Septiembre</option>
+                        <option value="9">Octubre</option>
+                        <option value="10">Noviembre</option>
+                        <option value="11">Diciembre</option>
+                    </select>
+                    <div class="calendar" id="calendar"></div>
+                </div>
+            </div>
+            <div class="footer">© 2024 Gestor de Aulas</div>
+    <script src="script.js"></script>
+</body>
+</html>
