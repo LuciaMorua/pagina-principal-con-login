@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const horariosTableBody = document.getElementById('horarios-table-body');
+    const tableHeader = document.getElementById('table-header');
     const startHour = 9;
     const endHour = 21;
 
@@ -8,6 +9,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const courses = loadFromStorage('courses'); 
     const reservations = loadFromStorage('reservations'); 
 
+    // Generar columnas de aulas dinámicamente en el encabezado
+    const renderRoomHeaders = () => {
+        // Limpiar cualquier columna existente en el encabezado
+        tableHeader.innerHTML = '<th>Horas / Aulas</th>';
+
+        // Crear una columna para cada aula guardada en localStorage
+        rooms.forEach((room) => {
+            const th = document.createElement('th');
+            th.textContent = room;
+            tableHeader.appendChild(th);
+        });
+    };
+
+    // Generar la tabla de horarios basada en las aulas y reservas
     const renderScheduleTable = () => {
         horariosTableBody.innerHTML = ''; 
 
@@ -53,6 +68,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    
-    renderScheduleTable();
+    renderRoomHeaders(); 
+    renderScheduleTable(); 
 });

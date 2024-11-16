@@ -28,6 +28,11 @@
                         <option value="anual">Anual</option>
                         <option value="cuatrimestral">Cuatrimestral</option>
                     </select>
+                    <!-- Selector de cuatrimestre, visible solo si es cuatrimestral -->
+                    <select id="cuatrimestre" style="display: none;">
+                        <option value="primer">Primer Cuatrimestre (Enero - Junio)</option>
+                        <option value="segundo">Segundo Cuatrimestre (Julio - Diciembre)</option>
+                    </select>
                     <select id="day">
                         <option value="Monday">Lunes</option>
                         <option value="Tuesday">Martes</option>
@@ -36,6 +41,9 @@
                         <option value="Friday">Viernes</option>
                     </select>
                     <input type="number" id="hour" min="9" max="20" placeholder="Hora (9-20)" required>
+                    <select id="aula" required>
+                        <!-- Opciones de aulas se generarán dinámicamente -->
+                    </select>
                     <button type="submit">Agregar Materia</button>
                 </form>
                 <table>
@@ -43,8 +51,10 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Tipo</th>
+                            <th>Cuatrimestre</th>
                             <th>Día</th>
                             <th>Hora</th>
+                            <th>Aula</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
@@ -56,6 +66,6 @@
             <div class="footer">© 2024 Gestor de Aulas</div>
         </div>
     </div>
-    <script src="tablahorarios.js"></script>
+    <script src="horarios.js"></script>
 </body>
 </html>
