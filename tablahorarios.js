@@ -9,12 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const courses = loadFromStorage('courses'); 
     const reservations = loadFromStorage('reservations'); 
 
-    // Generar columnas de aulas dinámicamente en el encabezado
-    const renderRoomHeaders = () => {
-        // Limpiar cualquier columna existente en el encabezado
+     const renderRoomHeaders = () => {
         tableHeader.innerHTML = '<th>Horas / Aulas</th>';
 
-        // Crear una columna para cada aula guardada en localStorage
         rooms.forEach((room) => {
             const th = document.createElement('th');
             th.textContent = room;
@@ -22,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Generar la tabla de horarios basada en las aulas y reservas
     const renderScheduleTable = () => {
         horariosTableBody.innerHTML = ''; 
 
