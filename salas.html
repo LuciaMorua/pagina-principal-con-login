@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Aulas - Salas</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-page">
+            <div class="sidebar">
+                <button onclick="location.href='index.html'">Inicio</button>
+                <button onclick="location.href='salas.html'">Salas</button>
+                <button onclick="location.href='horarios.html'">Horarios</button>
+                <button onclick="location.href='reservas.html'">Reservas</button>
+                <button onclick="location.href='PagPrincipal'">Salir</button>
+            </div>
+            <div class="header">
+                <h1>Gestión de Salas</h1>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            <div class="content">
+                <h2>CRUD de Aulas</h2>
+                <div>
+                    <form id="add-room-form">
+                        <input type="text" id="room-name" placeholder="Nombre de la Sala" required>
+                        <button type="submit">Agregar Sala</button>
+                    </form>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rooms-table-body">
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="footer">© 2024 Gestor de Aulas DODO</div>
+        </div>
+    </div>
+    <script src="salas.js"></script>
+</body>
+</html>

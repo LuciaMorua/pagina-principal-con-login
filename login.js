@@ -16,9 +16,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 feedback.style.color = 'green';
                 feedback.textContent = 'Iniciando sesión...';
 
-                // Redirección después de autenticación correcta
+                // Redirección a index.html después de autenticación correcta
                 setTimeout(() => {
-                    window.location.href = "cuatri-1.html";
+                    window.location.href = "index.html";
                 }, 1000); // Retardo de 1 segundo para mostrar el mensaje antes de redirigir
             } else {
                 feedback.style.color = 'red';

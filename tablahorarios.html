@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Aulas - Día Seleccionado</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-page">
+            <div class="sidebar">
+                <button onclick="location.href='index.html'">Inicio</button>
+                <button onclick="location.href='salas.html'">Salas</button>
+                <button onclick="location.href='horarios.html'">Horarios</button>
+                <button onclick="location.href='reservas.html'">Reservas</button>
+                <button onclick="location.href='PagPrincipal.html'">Salir</button>
+            </div>
+            <div class="header">
+                <h1>Horario del Día</h1>
+                <input type="text" placeholder="Buscar...">
+            </div>
+            <div class="content">
+                <h2>Horario de Aulas - Día Seleccionado</h2>
+                <div id="selected-date"></div> <!-- Este es el contenedor donde mostraremos el día -->
+                <div class="tabla-horarios">
+                    <table>
+                        <thead>
+                            <tr id="table-header">
+                                <th>Horas / Aulas</th>
+                            </tr>
+                        </thead>
+                        <tbody id="horarios-table-body">
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="footer">© 2024 Gestor de Aulas DODO</div>
+        </div>
+    </div>
+    <script src="tablahorarios.js"></script>
+</body>
+</html>
