@@ -1,6 +1,5 @@
-// Selección de elementos
 const calendar = document.querySelector(".calendar"),
-  daysContainer = document.querySelector("#days"), // Contenedor correcto para los días
+  daysContainer = document.querySelector("#days"), 
   currentDate = document.querySelector("#current-date"),
   monthSelector = document.querySelector("#month-selector"),
   todayBtn = document.querySelector(".today-btn"),
@@ -23,9 +22,11 @@ const months = [
   "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
 ];
 
+const daysOfWeek = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
+
 const eventsArr = [];
-getEvents(); 
-initCalendar(); 
+getEvents();
+initCalendar();
 
 function initCalendar() {
   updateCalendarHeader();
@@ -40,54 +41,29 @@ function updateCalendarHeader() {
 function generateDays() {
   const firstDay = new Date(year, month, 1);
   const lastDay = new Date(year, month + 1, 0);
-  const prevLastDay = new Date(year, month, 0);
-  const prevDays = prevLastDay.getDate();
   const lastDate = lastDay.getDate();
-  const startDayOfWeek = firstDay.getDay();
-  const remainingDays = 7 - lastDay.getDay() - 1;
 
   daysContainer.innerHTML = "";
 
-  for (let x = startDayOfWeek; x > 0; x--) {
-    const prevDate = document.createElement('div');
-    prevDate.classList.add('day', 'prev-date');
-    prevDate.textContent = prevDays - x + 1;
-    daysContainer.appendChild(prevDate);
-  }
-
   for (let i = 1; i <= lastDate; i++) {
-    const currentDate = document.createElement('div');
-    currentDate.classList.add('day');
-    currentDate.textContent = i;
+    const currentDate = new Date(year, month, i);
+    const dayOfWeek = daysOfWeek[currentDate.getDay()]; 
 
-    if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-      currentDate.classList.add('today');
-    }
+    const dayButton = document.createElement('button');
+    dayButton.classList.add('day');
 
-    const hasEvent = eventsArr.some(event => event.day === i && event.month === month + 1 && event.year === year);
-    if (hasEvent) {
-      currentDate.classList.add('event');
-    }
+    dayButton.textContent = `${dayOfWeek} ${i}`;
 
-    if (i === activeDay) {
-      currentDate.classList.add('active');
-    }
-
-    currentDate.addEventListener("click", () => {
-      activeDay = i;
-      updateEvents(activeDay);
-      initCalendar();
+    dayButton.addEventListener("click", () => {
+      console.log(`Día seleccionado: ${dayOfWeek} ${i}`);
+      alert(`Día seleccionado: ${dayOfWeek} ${i}`);
     });
 
-    daysContainer.appendChild(currentDate);
-  }
+    if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+      dayButton.classList.add('today');
+    }
 
-
-  for (let j = 1; j <= remainingDays; j++) {
-    const nextDate = document.createElement('div');
-    nextDate.classList.add('day', 'next-date');
-    nextDate.textContent = j;
-    daysContainer.appendChild(nextDate);
+    daysContainer.appendChild(dayButton);
   }
 }
 

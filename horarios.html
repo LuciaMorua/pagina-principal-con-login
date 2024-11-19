@@ -14,11 +14,11 @@
                 <button onclick="location.href='salas.html'">Salas</button>
                 <button onclick="location.href='horarios.html'">Horarios</button>
                 <button onclick="location.href='reservas.html'">Reservas</button>
-                <button onclick="location.href='configuracion.html'">Configuración</button>
+                <button onclick="location.href='PagPrincipal.html'">Salir</button>
             </div>
             <div class="header">
                 <h1>Gestión de Horarios</h1>
-                <input type="text" placeholder="Buscar...">
+                <input type="text" placeholder="Buscar..." id="search-course">
             </div>
             <div class="content">
                 <h2>CRUD de Materias</h2>
@@ -28,7 +28,6 @@
                         <option value="anual">Anual</option>
                         <option value="cuatrimestral">Cuatrimestral</option>
                     </select>
-                    <!-- Selector de cuatrimestre, visible solo si es cuatrimestral -->
                     <select id="cuatrimestre" style="display: none;">
                         <option value="primer">Primer Cuatrimestre (Enero - Junio)</option>
                         <option value="segundo">Segundo Cuatrimestre (Julio - Diciembre)</option>
@@ -40,7 +39,23 @@
                         <option value="Thursday">Jueves</option>
                         <option value="Friday">Viernes</option>
                     </select>
-                    <input type="number" id="hour" min="9" max="20" placeholder="Hora (9-20)" required>
+                    <select id="hour" required>
+                        <option value="7:30">7:30</option>
+                        <option value="8:30">8:30</option>
+                        <option value="9:30">9:30</option>
+                        <option value="10:30">10:30</option>
+                        <option value="11:30">11:30</option>
+                        <option value="12:30">12:30</option>
+                        <option value="13:30">13:30</option>
+                        <option value="14:30">14:30</option>
+                        <option value="15:30">15:30</option>
+                        <option value="16:30">16:30</option>
+                        <option value="17:30">17:30</option>
+                        <option value="18:30">18:30</option>
+                        <option value="19:30">19:30</option>
+                        <option value="20:30">20:30</option>
+                        <option value="21:30">21:30</option>
+                    </select>
                     <select id="aula" required>
                         <!-- Opciones de aulas se generarán dinámicamente -->
                     </select>

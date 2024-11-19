@@ -1,78 +1,119 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const courses = JSON.parse(localStorage.getItem('courses')) || [];
-    const rooms = JSON.parse(localStorage.getItem('rooms')) || [];
+    const courseForm = document.getElementById('add-course-form');
     const coursesTableBody = document.getElementById('courses-table-body');
-    const addCourseForm = document.getElementById('add-course-form');
-    const aulaSelect = document.getElementById('aula');
-    const cuatrimestreSelect = document.getElementById('cuatrimestre');
-    const courseTypeSelect = document.getElementById('course-type');
+    const roomSelect = document.getElementById('aula');
+    const searchInput = document.getElementById('search-course');
 
-    const saveCourses = () => localStorage.setItem('courses', JSON.stringify(courses));
+    // Cargar las aulas desde localStorage y mostrarlas en el formulario
+    const loadRoomsFromStorage = () => {
+        const rooms = JSON.parse(localStorage.getItem('rooms')) || [];
+        roomSelect.innerHTML = ''; // Limpiar las opciones existentes
 
-    
-    const renderRooms = () => {
-        aulaSelect.innerHTML = '';
-        rooms.forEach((room, index) => {
+        // Agregar aulas al select
+        rooms.forEach(room => {
             const option = document.createElement('option');
-            option.value = index + 1;  
-            option.textContent = room;  
-            aulaSelect.appendChild(option);
+            option.value = room;
+            option.textContent = room;
+            roomSelect.appendChild(option);
         });
     };
 
-    
-    const renderCourses = () => {
-        coursesTableBody.innerHTML = '';
+    // Cargar las materias desde localStorage y mostrarlas en la tabla
+    const loadCoursesFromStorage = () => {
+        const courses = JSON.parse(localStorage.getItem('courses')) || [];
+        coursesTableBody.innerHTML = ''; // Limpiar las filas existentes
+
+        // Mostrar las materias guardadas
         courses.forEach((course, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td>${course.name}</td>
                 <td>${course.type}</td>
-                <td>${course.type === 'cuatrimestral' ? course.cuatrimestre : 'Anual'}</td>
+                <td>${course.type === 'anual' ? 'Anual' : (course.cuatrimestre || 'N/A')}</td> <!-- Mostrar 'Anual' si el tipo es anual -->
                 <td>${course.day}</td>
-                <td>${course.hour}:00</td>
-                <td>Aula ${course.aula}</td>
-                <td>
-                    <button onclick="deleteCourse(${index})">Eliminar</button>
-                </td>
+                <td>${course.hour}</td>
+                <td>${course.room || 'N/A'}</td>
+                <td><button class="delete-button" data-index="${index}">Eliminar</button></td>
             `;
             coursesTableBody.appendChild(row);
         });
+
+        // Agregar el evento de eliminación a cada botón
+        const deleteButtons = document.querySelectorAll('.delete-button');
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const index = e.target.getAttribute('data-index'); // Obtener el índice del curso a eliminar
+                deleteCourse(index);
+            });
+        });
     };
 
-    
-    courseTypeSelect.addEventListener('change', () => {
-        if (courseTypeSelect.value === 'cuatrimestral') {
-            cuatrimestreSelect.style.display = 'block';
-        } else {
-            cuatrimestreSelect.style.display = 'none';
-        }
-    });
+    // Eliminar un curso
+    const deleteCourse = (index) => {
+        // Obtener cursos actuales desde localStorage
+        const courses = JSON.parse(localStorage.getItem('courses')) || [];
 
-    
-    addCourseForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const course = {
-            name: document.getElementById('course-name').value.trim(),
-            type: courseTypeSelect.value,
-            cuatrimestre: courseTypeSelect.value === 'cuatrimestral' ? cuatrimestreSelect.value : 'Anual',
-            day: document.getElementById('day').value,
-            hour: parseInt(document.getElementById('hour').value, 10),
-            aula: parseInt(aulaSelect.value, 10),  
-        };
-        courses.push(course);
-        renderCourses();
-        saveCourses();
-        addCourseForm.reset();
-    });
-
-    
-    window.deleteCourse = (index) => {
+        // Eliminar el curso en el índice especificado
         courses.splice(index, 1);
-        renderCourses();
-        saveCourses();
+
+        // Guardar la lista actualizada de cursos en localStorage
+        localStorage.setItem('courses', JSON.stringify(courses));
+
+        // Recargar la tabla de materias
+        loadCoursesFromStorage();
     };
 
-    renderRooms();  
-    renderCourses();  
+    // Agregar un nuevo curso
+    courseForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('course-name').value;
+        const type = document.getElementById('course-type').value;
+        const cuatrimestre = type === 'cuatrimestral' ? document.getElementById('cuatrimestre').value : 'Anual'; // Si es anual, se asigna 'Anual'
+        const day = document.getElementById('day').value;
+        const hour = document.getElementById('hour').value;
+        const room = roomSelect.value; // Asegurarse de que se obtenga correctamente el valor del aula
+
+        // Verificación: Si no se selecciona un aula, se muestra un mensaje de alerta
+        if (!room) {
+            alert("Por favor, selecciona un aula.");
+            return; // Si no se selecciona un aula, no guardamos el curso.
+        }
+
+        const newCourse = {
+            name,
+            type,
+            cuatrimestre,
+            day,
+            hour,
+            room
+        };
+
+        // Obtener cursos actuales
+        const courses = JSON.parse(localStorage.getItem('courses')) || [];
+        courses.push(newCourse);
+
+        // Guardar en localStorage
+        localStorage.setItem('courses', JSON.stringify(courses));
+
+        // Recargar la tabla de materias
+        loadCoursesFromStorage();
+
+        // Limpiar el formulario
+        courseForm.reset();
+    });
+
+    // Filtrar cursos por búsqueda
+    searchInput.addEventListener('input', () => {
+        const query = searchInput.value.toLowerCase();
+        const rows = coursesTableBody.querySelectorAll('tr');
+        rows.forEach(row => {
+            const courseName = row.querySelector('td').innerText.toLowerCase();
+            row.style.display = courseName.includes(query) ? '' : 'none';
+        });
+    });
+
+    // Cargar los datos al cargar la página
+    loadRoomsFromStorage();
+    loadCoursesFromStorage();
 });
