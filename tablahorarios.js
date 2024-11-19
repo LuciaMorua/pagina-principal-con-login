@@ -1,23 +1,22 @@
 document.addEventListener('DOMContentLoaded', () => {
     const horariosTableBody = document.getElementById('horarios-table-body');
     const tableHeader = document.getElementById('table-header');
-    const startHour = 7.5; // Hora de inicio (7:30 AM)
-    const endHour = 21.5;  // Hora de fin (9:30 PM)
+    const selectedDateDisplay = document.createElement('h3');  // Crear un h3 para mostrar el día seleccionado
+    const startHour = 7.5; 
+    const endHour = 21.5;  
 
-    // Cargar los datos desde localStorage
     const loadFromStorage = (key) => JSON.parse(localStorage.getItem(key)) || [];
 
     const rooms = loadFromStorage('rooms');
     const courses = loadFromStorage('courses');
     const reservations = loadFromStorage('reservations');
+    const selectedDate = localStorage.getItem('selectedDate');  // Obtener la fecha seleccionada del localStorage
 
-    // Convertir una hora en formato "HH:MM" a formato decimal (por ejemplo: "7:30" -> 7.5)
     const convertTimeToDecimal = (time) => {
         const [hour, minute] = time.split(":").map(Number);
         return hour + minute / 60;
     };
 
-    // Renderizar los encabezados de las aulas
     const renderRoomHeaders = () => {
         tableHeader.innerHTML = '<th>Horas / Aulas</th>';
 
@@ -28,28 +27,23 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Función para renderizar la tabla con los horarios
     const renderScheduleTable = () => {
-        horariosTableBody.innerHTML = ''; // Limpiar la tabla antes de renderizar
+        horariosTableBody.innerHTML = ''; 
 
-        // Recorrer las horas del día y agregar filas
-        for (let hour = startHour; hour <= endHour; hour += 0.5) {  // Incrementar de 0.5 en 0.5 (7:30, 8:00, etc.)
+        for (let hour = startHour; hour <= endHour; hour += 0.5) {  
             const row = document.createElement('tr');
             const hourCell = document.createElement('td');
             const hourText = hour % 1 === 0 ? `${Math.floor(hour)}:00` : `${Math.floor(hour)}:30`;
             hourCell.innerText = hourText;
             row.appendChild(hourCell);
 
-            // Para cada aula, revisar si tiene un curso o una reserva en la hora actual
             rooms.forEach((room) => {
                 const aulaCell = document.createElement('td');
                 aulaCell.classList.add('horario-celda');
 
-                // Buscar el curso o la reserva que coincida con la hora y el aula
                 const course = courses.find((c) => convertTimeToDecimal(c.hour) === hour && c.room === room);
                 const reservation = reservations.find((r) => convertTimeToDecimal(r.hour) === hour && r.room === room);
 
-                // Verificar si se encontró el curso o la reserva
                 if (course) {
                     aulaCell.innerText = `${course.name} (${course.type})`;
                     aulaCell.classList.add(course.type === 'anual' ? 'materia-anual' : 'materia-cuatrimestral');
@@ -57,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     aulaCell.innerText = `${reservation.name}`;
                     aulaCell.classList.add('materia-temporal');
                 } else {
-                    aulaCell.innerText = '';  // Dejar vacía la celda si no hay curso ni reserva
+                    aulaCell.innerText = '';  
                 }
 
                 row.appendChild(aulaCell);
@@ -67,7 +61,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Llamar a las funciones de renderizado
+    // Mostrar el día seleccionado arriba de la tabla
+    if (selectedDate) {
+        selectedDateDisplay.textContent = `Día seleccionado: ${selectedDate}`;
+        document.querySelector('.content').insertBefore(selectedDateDisplay, horariosTableBody);
+    }
+
     renderRoomHeaders();
     renderScheduleTable();
 });

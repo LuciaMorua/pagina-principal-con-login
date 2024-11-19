@@ -57,6 +57,9 @@ function generateDays() {
     dayButton.addEventListener("click", () => {
       console.log(`Día seleccionado: ${dayOfWeek} ${i}`);
       alert(`Día seleccionado: ${dayOfWeek} ${i}`);
+
+      // Guardamos el día seleccionado en el localStorage
+      localStorage.setItem('selectedDate', `${i} de ${months[month]}`);
     });
 
     if (i === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
